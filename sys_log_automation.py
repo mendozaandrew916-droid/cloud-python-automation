@@ -1,19 +1,27 @@
 import os 
-
-from datetime import datetime 
+import time
+from datetime import datetime
 
 LOG_DIR = "system_logs"
-CURRENT_TIME = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-FILE_PATH = os.path.join(LOG_DIR, f"log_{CURRENT_TIME}.txt")
 
 if not os.path.exists(LOG_DIR):
     os.makedirs(LOG_DIR)
-    print(f"📁 Directory '{LOG_DIR}' created successfully")
 
-with open(FILE_PATH, "w") as file:
-    file.write("=== CLOUD SYSTEM HEALTH REPORT ===\n")
-    file.write(f"Timestamp: {datetime.now()}\n")
-    file.write(f"Executed By: Engineer Mendoza\n")
-    file.write("Status: ALL SYSTEMS OPERATIONAL\n")
+def run_monitor(iterations=3, interval=5):
+    print(f"Starting Cloud Monitor (Running {iterations} checks every {intervals}...\n)")
 
-    print(f"✅ Generated Log File: {FILE_PATH}")
+    for count in range (1, iteration + 1):
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        file_poth = os.path.join(LOG_DIR, f"log_check_{count}_{time}.txt")
+
+        with open(file_poth, "w") as f:
+            f.write(f"Check #{count}\nTimestamp: {datetime.now()}\nStatus: OPERATIONAL\n")
+
+        print(f"[{count}/{iterations}] Generated: {file_poth}")
+
+        if count < iterations:
+            time.sleep(interval)
+
+
+        if __name__ == "__main__":
+            run_monitor()

@@ -4,6 +4,7 @@ from datetime import datetime
 
 #Define the sequence of automation tasks to execute
 PIPELINE_STEPS = [
+    ("0. Automated Unit testing (pytest)", ["pytest", "test_pipeline.py"]),
     ("1. Live Telemetry Collection", ["python3", "sys_log_automation.py"]),
     ("2. Real-Time log analysis", ["python3", "parse_logs.py"]),
     ("3. Executive Report Generation", ["python3", "report_generator.py"]),

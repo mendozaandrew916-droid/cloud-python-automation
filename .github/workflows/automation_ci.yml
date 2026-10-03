@@ -6,6 +6,9 @@ on:
  pull_request:
    branches: ["main"]
  workflow_dispatch: #allows manual trigger from GitHub UI
+ schedule:
+   #Runs automatically every hour at minute 0 (POSIX Cron Syntax)
+   - cron: '0 * * * *'
 
 jobs:
   run-pipeline:

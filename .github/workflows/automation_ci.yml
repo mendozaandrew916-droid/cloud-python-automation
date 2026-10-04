@@ -12,16 +12,22 @@ on:
 
 jobs:
   run-pipeline:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy: 
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.10", "3.11"]
 
     steps:
       - name: Checkout repository code
         uses: actions/checkout@v4
 
-      - name: Set up Python environment
+      - name: Set up Python environment (${{ matrix.python-version }})
         uses: actions/setup-python@v5
         with: 
-          python-version: "3.10"
+          python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
         run: |
@@ -31,9 +37,16 @@ jobs:
       - name: Execute Master Automation Pipeline
         run: |
           python3 main_pipeline.py
+        if: runner.os != 'Windows'
+      
+      #Windows Powershell syntax adjustment for executing Python
+      - name: Executive Master Automation Pipeline (Windows)
+        run: |
+          python main_pipeline.py
+        if: runner.os == 'Windows'
 
       - name: Upload Executive Report Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: system-health-Report
+          name: system-health-report-${{ matrix.os }}-py${{ matrix.python-version }}
           path: system_health_report.md
